@@ -37,10 +37,9 @@ load(
 )
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 
-package(
-    default_visibility = [":internal"],
-    licenses = ["notice"],  # Apache 2.0
-)
+package(default_visibility = [":internal"])
+
+licenses(["notice"])
 
 exports_files([
     "LICENSE",
@@ -482,7 +481,10 @@ config_setting(
 
 config_setting(
     name = "no_nccl_support",
-    define_values = {"no_nccl_support": "true"},
+    define_values = dict(
+        if_google({"GOOGLE_CUDA_COMPILER": "clang"}),
+        no_nccl_support = "true",
+    ),
     visibility = ["//visibility:public"],
 )
 
@@ -788,6 +790,7 @@ package_group(
         "//learning/lib/ami/simple_ml/...",
         "//tensorflow/...",
         "//tensorflow_decision_forests/...",
+        "//tensorflow_federated/...",
         "//third_party/cloud_tpu/inference_converter/...",
     ],
 )
