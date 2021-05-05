@@ -95,7 +95,7 @@ class StructField(
         `value_type`.
     """
     try:
-      validate_field_value_type(value_type)
+      validate_field_value_type(value_type, allow_forward_references=True)
     except TypeError as e:
       raise TypeError(f'In field {name!r}: {e}')
 
@@ -311,8 +311,9 @@ def _convert_tensor_spec(value, expected_type, path, for_spec):
     try:
       value = ops.convert_to_tensor(value, expected_type.dtype)
     except (ValueError, TypeError):
-      value = None
-  if value is None or not expected_type.is_compatible_with(value):
+      raise TypeError(f'{"".join(path)}: expected a {expected_type.dtype!r} '
+                      f'Tensor, got {value!r}')
+  if not expected_type.is_compatible_with(value):
     raise TypeError(f'{"".join(path)}: expected a Tensor compatible with '
                     f'{expected_type}, got {value!r}')
   return value

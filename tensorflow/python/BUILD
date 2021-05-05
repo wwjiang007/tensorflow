@@ -210,6 +210,7 @@ py_library(
         "//tensorflow/python/framework:graph_util",
         "//tensorflow/python/framework:kernels",
         "//tensorflow/python/framework:subscribe",
+        "//tensorflow/python/framework:tensor_struct",
         "//tensorflow/python/framework:test_ops",  # TODO(b/183988750): Break testing code out into separate rule.
         "//tensorflow/python/module",
         "//tensorflow/python/ops/distributions",
@@ -3406,7 +3407,6 @@ pywrap_tensorflow_macro(
         ":tf_session_helper",
         "//third_party/python_runtime:headers",
         "//tensorflow/c:c_api",
-        "//tensorflow/c:ops",
         "//tensorflow/c:c_api_experimental",
         "//tensorflow/c:checkpoint_reader",
         "//tensorflow/c:python_api",
